@@ -1,6 +1,6 @@
 # Workload Identity for Azure OpenAI and Auth0
 
-This repo will help you to use a Workload Identity to connect to Azure OpenAI with an identity in Auth0.
+This repo will help you to use a Workload Identity to connect to Azure OpenAI with an identity in [Auth0](https://auth0.com/).
 
 An API/identity (clientID/clientSecret) is created in an Auth0 domain. This identity is used to authenticate to Auth0 and retrieve an acces_token.  
 
