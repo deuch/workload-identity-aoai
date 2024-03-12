@@ -2,8 +2,13 @@
 
 This repo will help you to use a Workload Identity to connect to Azure OpenAI with an identity in Auth0.
 
-An API/identity (clientID/clientSecret) is created in an Auth0 domain. This identity is used to authenticate to Auth0 and retrieve an acces_token.
-This token is used to authenticate to Azure Entra ID with a binding on a User Managed Identity (Federated Credentials)
+An API/identity (clientID/clientSecret) is created in an Auth0 domain. This identity is used to authenticate to Auth0 and retrieve an acces_token.  
+
+This token is used to authenticate to Azure Entra ID with a binding on a User Managed Identity (Federated Credentials).
+
+Please find some [documentation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation#how-it-works) about the concept of workload identity.
+
+Use the client credential flow as explained [here](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow#third-case-access-token-request-with-a-federated-credential)
 
 ## Auth0
 
@@ -35,6 +40,7 @@ You can signup to a free account on [Auth0](https://auth0.com/)
 - Issuer URL : https:// + Auth0 Domain  
 - Subject Identifier : Auth0 Client ID + **@clients**  
 - Name : The name you want
+- Keep the same audience as set in Auth0 : **api://AzureADTokenExchange**
 
 ![API in Auth0](./img/5.png)
 
@@ -62,10 +68,7 @@ You can signup to a free account on [Auth0](https://auth0.com/)
 |AZURE_TENANT_ID||ID of your Entra ID tenant|
 |AZURE_CLIENT_ID||ClientID of the User Managed Identity|
 |AZURE_AOAI_ENDPOINT||Endpoint of the Azure OpenAI resource (with https)|
+|AZURE_AOAI_MODEL_DEPLOYMENT_NAME||Deployment name of your gpt model|
+|AZURE_AOAI_API_VERSION|2023-07-01-preview|API version of Azure OpenAI|
 
 
-### POST Manual actions
-
-1. You need to approve the Shared Private Access Link on the storage account for AI Search service
-2. You need to add the **Storage Blob Data Reader** Role to the System Managed Identity of your Document Intelligence service on the Storage Account
-3. Please add an Identity Provider for the 2 webapps (webapp and adminwebapp)
