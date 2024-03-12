@@ -29,7 +29,7 @@ You can signup to a free account on [Auth0](https://auth0.com/)
 
 ![API in Auth0](./img/3.png)
 
-## Managed Identity
+## Azure Managed Identity
 
 1. Create a User Managed Identity and add a Federated credential
 
@@ -54,11 +54,15 @@ You can signup to a free account on [Auth0](https://auth0.com/)
 - You need to install all the package in the requirements file
   - `pip install requirements.txt`
 - Rename the **.env-sample** file to **.env**
-- Fill all the values
+- Fill all the values (check below for details)
 - Run the code
   - `python aoai.py`
+- You can change the prompt directly in the code
+  - By default : `"How do I output all files in a directory using Python?"`
 
 ## Deployment parameters
+
+This is the detail of the paramaters to set in the .env file
 
 | Parameter | Value | Note |
 | --- | --- | ------------- |
