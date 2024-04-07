@@ -1,0 +1,5 @@
+azure-identity==1.15.0
+openai==1.16.2
+python-dotenv==1.0.0
+httpx
+httpx_auth
