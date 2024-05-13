@@ -16,6 +16,7 @@ OIDC_CLIENT_SECRET=os.environ.get('OIDC_CLIENT_SECRET')
 OIDC_SCOPE=os.environ.get('OIDC_SCOPE')
 AZURE_OPENAI_ENDPOINT=os.environ.get('AZURE_OPENAI_ENDPOINT')
 AZURE_OPENAI_DEPLOYMENT_NAME=os.environ.get('AZURE_OPENAI_DEPLOYMENT_NAME')
+AZURE_OPENAI_DEPLOYMENT_EMBEDDINGS_NAME=os.environ.get('AZURE_OPENAI_DEPLOYMENT_EMBEDDINGS_NAME')
 AZURE_OPENAI_MODEL_NAME=os.environ.get('AZURE_OPENAI_MODEL_NAME')
 OPENAI_API_VERSION=os.environ.get('OPENAI_API_VERSION')
 
@@ -25,15 +26,17 @@ OPENAI_API_VERSION=os.environ.get('OPENAI_API_VERSION')
 oauth2_httpxclient=httpx.Client()
 auth=OAuth2ClientCredentials(OIDC_ENDPOINT, client_id=OIDC_CLIENT_ID, client_secret=OIDC_CLIENT_SECRET, scope=OIDC_SCOPE, client=oauth2_httpxclient)
 
-# Loop to check if the token is retrieved from cache
+# Create the client
+httpClient=httpx.Client(auth=auth)
 
-llm=AzureOpenAI(deployment_name=AZURE_OPENAI_DEPLOYMENT_NAME,model_name=AZURE_OPENAI_MODEL_NAME,http_client=httpx.Client(auth=auth))
+# LLM init
+llm=AzureOpenAI(deployment_name=AZURE_OPENAI_DEPLOYMENT_NAME,model_name=AZURE_OPENAI_MODEL_NAME,http_client=httpClient)
 question="How do I output all files in a directory using Python?"
 
+# Embeddings Init
 embeddings = AzureOpenAIEmbeddings(
-    azure_deployment="text-embedding-ada-002",
-    openai_api_version="2023-05-15",
-    http_client=httpx.Client(auth=auth)
+    azure_deployment=AZURE_OPENAI_DEPLOYMENT_EMBEDDINGS_NAME,
+    http_client=httpClient
 )
 
 print('******* Completions : ')
