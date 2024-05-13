@@ -2,8 +2,11 @@ import os
 import httpx
 import json
 from langchain_openai import AzureOpenAI
+from langchain_openai import AzureOpenAIEmbeddings
+
 from dotenv import load_dotenv
 from httpx_auth import OAuth2ClientCredentials
+
 
 load_dotenv()
 
@@ -27,6 +30,20 @@ auth=OAuth2ClientCredentials(OIDC_ENDPOINT, client_id=OIDC_CLIENT_ID, client_sec
 llm=AzureOpenAI(deployment_name=AZURE_OPENAI_DEPLOYMENT_NAME,model_name=AZURE_OPENAI_MODEL_NAME,http_client=httpx.Client(auth=auth))
 question="How do I output all files in a directory using Python?"
 
+embeddings = AzureOpenAIEmbeddings(
+    azure_deployment="text-embedding-ada-002",
+    openai_api_version="2023-05-15",
+    http_client=httpx.Client(auth=auth)
+)
+
+print('******* Completions : ')
 print(llm.invoke(question))
+print('******* LLM Config : ')
 print(llm)
+
+query_result = embeddings.embed_query(question)
+
+print('******* Question embeddings : ')
+print(query_result)
+
 
